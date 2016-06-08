@@ -14,10 +14,14 @@
 
 @implementation ViewController
 
+#pragma mark - View Lifecycle
+
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 }
+
+#pragma mark - Memory Management
 
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
