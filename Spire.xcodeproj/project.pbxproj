@@ -7,25 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		730014836846C5C6A57B307B /* libPods-Spire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A407B8CDEC35C1CE4D04CD /* libPods-Spire.a */; };
 		D0CF54CC1D08C95100E49945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CF54CB1D08C95100E49945 /* main.m */; };
 		D0CF54CF1D08C95100E49945 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CF54CE1D08C95100E49945 /* AppDelegate.m */; };
-		D0CF54D21D08C95100E49945 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CF54D11D08C95100E49945 /* ViewController.m */; };
-		D0CF54D51D08C95100E49945 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0CF54D31D08C95100E49945 /* Main.storyboard */; };
+		D0CF54D21D08C95100E49945 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CF54D11D08C95100E49945 /* TableViewController.m */; };
 		D0CF54D71D08C95100E49945 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0CF54D61D08C95100E49945 /* Assets.xcassets */; };
-		D0CF54DA1D08C95100E49945 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0CF54D81D08C95100E49945 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5A31AC1FEF220389935F695F /* Pods-Spire.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spire.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spire/Pods-Spire.release.xcconfig"; sourceTree = "<group>"; };
+		5CB4D0F90AF3021C72F203C8 /* Pods-Spire.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spire.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spire/Pods-Spire.debug.xcconfig"; sourceTree = "<group>"; };
 		D0CF54C71D08C95000E49945 /* Spire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0CF54CB1D08C95100E49945 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D0CF54CD1D08C95100E49945 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D0CF54CE1D08C95100E49945 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D0CF54D01D08C95100E49945 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		D0CF54D11D08C95100E49945 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		D0CF54D41D08C95100E49945 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D0CF54D01D08C95100E49945 /* TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
+		D0CF54D11D08C95100E49945 /* TableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		D0CF54D61D08C95100E49945 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D0CF54D91D08C95100E49945 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0CF54DB1D08C95100E49945 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7A407B8CDEC35C1CE4D04CD /* libPods-Spire.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spire.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,17 +33,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				730014836846C5C6A57B307B /* libPods-Spire.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		74E410611D05958DDE9978B5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E7A407B8CDEC35C1CE4D04CD /* libPods-Spire.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BE732F368DE4BC6B9630CFAC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5CB4D0F90AF3021C72F203C8 /* Pods-Spire.debug.xcconfig */,
+				5A31AC1FEF220389935F695F /* Pods-Spire.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D0CF54BE1D08C95000E49945 = {
 			isa = PBXGroup;
 			children = (
 				D0CF54C91D08C95100E49945 /* Spire */,
 				D0CF54C81D08C95000E49945 /* Products */,
+				BE732F368DE4BC6B9630CFAC /* Pods */,
+				74E410611D05958DDE9978B5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,11 +80,9 @@
 			children = (
 				D0CF54CD1D08C95100E49945 /* AppDelegate.h */,
 				D0CF54CE1D08C95100E49945 /* AppDelegate.m */,
-				D0CF54D01D08C95100E49945 /* ViewController.h */,
-				D0CF54D11D08C95100E49945 /* ViewController.m */,
-				D0CF54D31D08C95100E49945 /* Main.storyboard */,
+				D0CF54D01D08C95100E49945 /* TableViewController.h */,
+				D0CF54D11D08C95100E49945 /* TableViewController.m */,
 				D0CF54D61D08C95100E49945 /* Assets.xcassets */,
-				D0CF54D81D08C95100E49945 /* LaunchScreen.storyboard */,
 				D0CF54DB1D08C95100E49945 /* Info.plist */,
 				D0CF54CA1D08C95100E49945 /* Supporting Files */,
 			);
@@ -86,9 +104,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0CF54DE1D08C95100E49945 /* Build configuration list for PBXNativeTarget "Spire" */;
 			buildPhases = (
+				4DB8AEDB4143F1ABE15FAE24 /* Check Pods Manifest.lock */,
 				D0CF54C31D08C95000E49945 /* Sources */,
 				D0CF54C41D08C95000E49945 /* Frameworks */,
 				D0CF54C51D08C95000E49945 /* Resources */,
+				A4AE8896C552E261F1949747 /* Embed Pods Frameworks */,
+				D3D21B554B5A259BD1E92799 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -137,45 +158,72 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0CF54DA1D08C95100E49945 /* LaunchScreen.storyboard in Resources */,
 				D0CF54D71D08C95100E49945 /* Assets.xcassets in Resources */,
-				D0CF54D51D08C95100E49945 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4DB8AEDB4143F1ABE15FAE24 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A4AE8896C552E261F1949747 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Spire/Pods-Spire-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D3D21B554B5A259BD1E92799 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Spire/Pods-Spire-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D0CF54C31D08C95000E49945 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0CF54D21D08C95100E49945 /* ViewController.m in Sources */,
+				D0CF54D21D08C95100E49945 /* TableViewController.m in Sources */,
 				D0CF54CF1D08C95100E49945 /* AppDelegate.m in Sources */,
 				D0CF54CC1D08C95100E49945 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		D0CF54D31D08C95100E49945 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D0CF54D41D08C95100E49945 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		D0CF54D81D08C95100E49945 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D0CF54D91D08C95100E49945 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		D0CF54DC1D08C95100E49945 /* Debug */ = {
@@ -264,8 +312,10 @@
 		};
 		D0CF54DF1D08C95100E49945 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5CB4D0F90AF3021C72F203C8 /* Pods-Spire.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Spire/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Justin-Lee.Spire";
@@ -275,8 +325,10 @@
 		};
 		D0CF54E01D08C95100E49945 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A31AC1FEF220389935F695F /* Pods-Spire.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = Spire/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Justin-Lee.Spire";
@@ -303,6 +355,7 @@
 				D0CF54E01D08C95100E49945 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
