@@ -14,7 +14,7 @@
 @interface TableViewCell : UITableViewCell
 
 @property (strong, nonatomic) UILabel *label;
-@property (strong, nonatomic) UIView *view;
+@property (strong, nonatomic) UIView *card;
 @property (strong, nonatomic) UIImageView *imgView;
 @property (strong, nonatomic) MKMapView *mapView;
 

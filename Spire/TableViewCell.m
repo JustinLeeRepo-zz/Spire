@@ -20,17 +20,21 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
 	
 	if(self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]){
-		[self setFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 100)];
+		[self setFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 110)];
 		
-		self.backgroundColor = [UIColor lightGrayColor];
+		self.backgroundColor = [UIColor whiteColor];
 		
-		self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width / 2, self.frame.size.height)];
+		self.card = [[UIView alloc] initWithFrame:CGRectMake(0, 5, self.frame.size.width, 100)];
+		self.card.backgroundColor = [UIColor lightGrayColor];
+		
+		self.label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width / 2, self.card.frame.size.height)];
 		[self.label setFont:[UIFont systemFontOfSize:17]];
 		[self.label setTextColor:[UIColor blackColor]];
 		[self.label setTextAlignment:NSTextAlignmentCenter];
 		[self.label setNumberOfLines:3];
 		
-		[self.contentView addSubview:self.label];
+		[self.card addSubview:self.label];
+		[self.contentView addSubview:self.card];
 
 	}
 	
@@ -44,13 +48,13 @@
 }
 
 - (void)initSetImg{
-	self.imgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width / 2, 0, self.frame.size.width / 2, self.frame.size.height)];
+	self.imgView = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width / 2, 0, self.frame.size.width / 2, self.card.frame.size.height)];
 	self.imgView.tag = 99;
-	[self.contentView addSubview:self.imgView];
+	[self.card addSubview:self.imgView];
 }
 
 - (void)initSetMap:(double)latitude withLongitude:(double)longitude {
-	self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(self.frame.size.width / 2, 0, self.frame.size.width / 2, self.frame.size.height)];
+	self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(self.frame.size.width / 2, 0, self.frame.size.width / 2, self.card.frame.size.height)];
 	self.mapView.tag = 98;
 	CLLocationCoordinate2D mapCenter;
 	mapCenter.latitude = latitude;
@@ -63,7 +67,7 @@
 	region.span.longitudeDelta = .002;
 	
 	[self.mapView setRegion:region animated:NO];
-	[self.contentView addSubview:self.mapView];
+	[self.card addSubview:self.mapView];
 }
 
 @end

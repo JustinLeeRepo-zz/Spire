@@ -161,7 +161,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 100;
+	return 110;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -193,7 +193,7 @@
 	if (cell == nil) {
 		cell = [[TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	} else {
-		for (UIView *view in cell.contentView.subviews) {
+		for (UIView *view in [cell.contentView.subviews objectAtIndex:0].subviews) {
 			if (view.tag == 99 || view.tag == 98) {
 				[view removeFromSuperview];
 			}
