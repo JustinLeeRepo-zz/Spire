@@ -30,13 +30,8 @@
 		[self.label setTextAlignment:NSTextAlignmentCenter];
 		[self.label setNumberOfLines:3];
 		
-//		self.view = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width / 2, 0, self.frame.size.width / 2, self.frame.size.height)];
-		
-//		self.imgView = [[UIImageView alloc] init];
-//		self.mapView = [[MKMapView alloc] init];
-		
 		[self.contentView addSubview:self.label];
-//		[self addSubview:self.view];
+
 	}
 	
 	return self;

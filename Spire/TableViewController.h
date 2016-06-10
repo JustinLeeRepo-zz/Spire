@@ -15,6 +15,9 @@
 @property (strong, nonatomic) NSNumber *secsUTC;
 @property (strong, nonatomic) NSMutableArray *dictionaryKeyArray;
 @property (strong, nonatomic) NSMutableDictionary *streakSectionDictionary;
+@property (assign, nonatomic) BOOL isLoading;
+@property (assign, nonatomic) int currentPage;
+@property (strong, nonatomic) NSNumber *currentDayUTC;
+
 
 @end
-

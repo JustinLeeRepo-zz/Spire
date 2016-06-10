@@ -28,57 +28,14 @@
 	[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	self.streakSectionDictionary = [[NSMutableDictionary alloc] init];
 	self.dictionaryKeyArray = [[NSMutableArray alloc] init];
+	self.tableView.pagingEnabled = YES;
+	self.currentPage = 0;
+	NSTimeInterval currentDay = [[NSDate date] timeIntervalSince1970];
+	NSInteger currentDayInt = currentDay;
+	self.currentDayUTC = [NSNumber numberWithLong:currentDayInt];
+	self.isLoading = YES;
+	[self fetchNextPage:self.currentPage];
 	
-	self.secsUTC = [NSNumber numberWithInt:[[NSDate date] timeIntervalSince1970]];
-	NSString *baseURL = @"http://spire-challenge.herokuapp.com/";
-	NSString *streakURL = [NSString stringWithFormat:@"%@%@/%@", baseURL, @"streaks", self.secsUTC];
-	NSString *imgURL = [NSString stringWithFormat:@"%@%@/%@", baseURL, @"photos", self.secsUTC];
-	NSString *mapURL = [NSString stringWithFormat:@"%@%@/%@", baseURL, @"locations", self.secsUTC];
-	self.endpointArray = [[NSArray alloc] initWithObjects:streakURL, imgURL, mapURL, nil];
-
-	
-	AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-	
-	dispatch_group_t group = dispatch_group_create();
-	
-	for (int i = 0; i < 3; i++) {
-		NSLog(@"yoyo");
-		// Enter the group for each request we create
-		dispatch_group_enter(group);
-		
-		// Fire the request
-		[manager GET:[self.endpointArray objectAtIndex:i] parameters:nil progress:nil success:^(NSURLSessionTask *task, NSArray *responseObject){
-			NSLog(@"HTTP REQUEST SUCCESS %@ count %lu", responseObject, (unsigned long)responseObject.count);
-			//		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
-			[self parseStreak:responseObject];
-			//		});
-			
-			
-			// Leave the group as soon as the request succeeded
-			dispatch_group_leave(group);
-		} failure:^(NSURLSessionTask *operation, NSError *error){
-			NSLog(@"HTTP GET REQUEST FAILED %@", error);
-			
-			// Leave the group as soon as the request failed
-			dispatch_group_leave(group);
-			return;
-		}];
-	}
-	
-	// Here we wait for all the requests to finish
-	dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-		
-		self.dictionaryKeyArray = [self.streakSectionDictionary allKeys];
-		NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:nil ascending:NO];
-		self.dictionaryKeyArray = [self.dictionaryKeyArray sortedArrayUsingDescriptors:@[sd]];
-		[self.tableView reloadData];
-		
-//		for (Streak *s in [self.streakSectionDictionary objectForKey:self.secsUTC]) {
-//			NSLog(@"oh year %@ %@", s.arrivedAt, s.takenAt);
-//		}
-//		NSLog(@"oh yeah %@ count %d", [self.streakSectionDictionary objectForKey:self.secsUTC], ((NSArray *)[self.streakSectionDictionary objectForKey:self.secsUTC]).count);
-		// Do whatever you need to do when all requests are finished
-	});
 }
 
 #pragma mark - Data Parse
@@ -114,10 +71,6 @@
 			double latitude = [[dict objectForKey:@"latitude"] doubleValue];
 			double longitude = [[dict objectForKey:@"longitude"] doubleValue];
 			
-			//iterate through streaksectiondictionary object for key:self.secutc
-			//find streak with startAt < arrivedAt && stopAt > arrivedAt
-			// initimg for that streak instance
-			
 			Streak *s = [self inRangeOfTime:arrivedAt withStreakArray:currentDayStreak];
 			if(s != nil){
 				[s initCoordinates:latitude withLongitude:longitude withArrivedAt:arrivedAt];
@@ -135,6 +88,53 @@
 	}
 }
 
+#pragma mark - Pagination
+
+- (void)fetchNextPage:(int)pageNumber {
+	self.isLoading = YES;
+	int subtractDay = (60 * 60 * 24) * pageNumber;
+	
+	self.secsUTC = [NSNumber numberWithInt:([self.currentDayUTC intValue] - subtractDay)];
+	NSString *baseURL = @"http://spire-challenge.herokuapp.com/";
+	NSString *streakURL = [NSString stringWithFormat:@"%@%@/%@", baseURL, @"streaks", self.secsUTC];
+	NSString *imgURL = [NSString stringWithFormat:@"%@%@/%@", baseURL, @"photos", self.secsUTC];
+	NSString *mapURL = [NSString stringWithFormat:@"%@%@/%@", baseURL, @"locations", self.secsUTC];
+	self.endpointArray = [[NSArray alloc] initWithObjects:streakURL, imgURL, mapURL, nil];
+	
+	
+	AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+	
+	dispatch_group_t group = dispatch_group_create();
+	
+	for (int i = 0; i < 3; i++) {
+		//Enter group for each request
+		dispatch_group_enter(group);
+		
+		[manager GET:[self.endpointArray objectAtIndex:i] parameters:nil progress:nil success:^(NSURLSessionTask *task, NSArray *responseObject){
+			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
+				[self parseStreak:responseObject];
+			});
+			
+			dispatch_group_leave(group);
+		} failure:^(NSURLSessionTask *operation, NSError *error){
+			NSLog(@"HTTP GET REQUEST FAILED %@", error);
+			
+			dispatch_group_leave(group);
+			return;
+		}];
+	}
+	
+	//wait for all the requests to finish
+	dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+		
+		self.dictionaryKeyArray = [self.streakSectionDictionary allKeys];
+		NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:nil ascending:NO];
+		self.dictionaryKeyArray = [self.dictionaryKeyArray sortedArrayUsingDescriptors:@[sd]];
+		[self.tableView reloadData];
+		self.isLoading = NO;
+	});
+	
+}
 
 #pragma mark - TableView Delegate / DataSource
 
@@ -144,7 +144,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 	NSString *key = [self.dictionaryKeyArray objectAtIndex:section];
-	NSLog(@"how many rows %lu", (unsigned long)((NSArray *)[self.streakSectionDictionary objectForKey:key]).count);
 	return ((NSArray *)[self.streakSectionDictionary objectForKey:key]).count;
 }
 
@@ -154,6 +153,20 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
 	return 15;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+	int section = [indexPath section];
+	int row = [indexPath row];
+	
+	NSString *lastDay = [self.dictionaryKeyArray objectAtIndex:([self.dictionaryKeyArray count] - 1)];
+	NSMutableArray * lastDayStreaks = [self.streakSectionDictionary objectForKey:lastDay];
+	int lastSection = self.streakSectionDictionary.count - 1;
+	int lastRowInLastSection = lastDayStreaks.count - 1;
+	
+	if (section == lastSection && row == lastRowInLastSection && !self.isLoading) {
+		[self fetchNextPage:++self.currentPage];
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -188,16 +201,13 @@
 	[cell setLabelText:[NSString stringWithFormat:@"%@\n%d min\n%@", streak.type, duration, timeString]];
 	
 	if(streak.url != nil){
-		NSLog(@"OH YEAH BABY SET IMG");
 		[cell initSetImg];
 		[cell.imgView setImageWithURL:streak.url];
 	}
 	else if(streak.arrivedAt != nil){
-		NSLog(@"OH NO DADDY SET MAP");
 		[cell initSetMap:streak.latitude withLongitude:streak.longitude];
 	}
 	else{
-		NSLog(@"WTF");
 	}
 	return cell;
 }
