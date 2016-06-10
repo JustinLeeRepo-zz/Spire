@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TableViewController : UITableViewController
+@interface TableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
 
+@property (strong, nonatomic) NSArray *endpointArray;
+@property (strong, nonatomic) NSArray *functionArray;
+@property (strong, nonatomic) NSNumber *secsUTC;
+@property (strong, nonatomic) NSMutableArray *dictionaryKeyArray;
+@property (strong, nonatomic) NSMutableDictionary *streakSectionDictionary;
 
 @end
 

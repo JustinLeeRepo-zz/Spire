@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		730014836846C5C6A57B307B /* libPods-Spire.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E7A407B8CDEC35C1CE4D04CD /* libPods-Spire.a */; };
+		D08FFBC61D08DB0300CF2BDB /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D08FFBC51D08DB0300CF2BDB /* TableViewCell.m */; };
+		D08FFBCA1D09201800CF2BDB /* Streak.m in Sources */ = {isa = PBXBuildFile; fileRef = D08FFBC91D09201800CF2BDB /* Streak.m */; };
 		D0CF54CC1D08C95100E49945 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CF54CB1D08C95100E49945 /* main.m */; };
 		D0CF54CF1D08C95100E49945 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CF54CE1D08C95100E49945 /* AppDelegate.m */; };
 		D0CF54D21D08C95100E49945 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CF54D11D08C95100E49945 /* TableViewController.m */; };
@@ -17,6 +19,10 @@
 /* Begin PBXFileReference section */
 		5A31AC1FEF220389935F695F /* Pods-Spire.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spire.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spire/Pods-Spire.release.xcconfig"; sourceTree = "<group>"; };
 		5CB4D0F90AF3021C72F203C8 /* Pods-Spire.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spire.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spire/Pods-Spire.debug.xcconfig"; sourceTree = "<group>"; };
+		D08FFBC51D08DB0300CF2BDB /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
+		D08FFBC71D08DB1200CF2BDB /* TableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
+		D08FFBC81D091FF800CF2BDB /* Streak.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Streak.h; sourceTree = "<group>"; };
+		D08FFBC91D09201800CF2BDB /* Streak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Streak.m; sourceTree = "<group>"; };
 		D0CF54C71D08C95000E49945 /* Spire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0CF54CB1D08C95100E49945 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D0CF54CD1D08C95100E49945 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -82,6 +88,10 @@
 				D0CF54CE1D08C95100E49945 /* AppDelegate.m */,
 				D0CF54D01D08C95100E49945 /* TableViewController.h */,
 				D0CF54D11D08C95100E49945 /* TableViewController.m */,
+				D08FFBC81D091FF800CF2BDB /* Streak.h */,
+				D08FFBC91D09201800CF2BDB /* Streak.m */,
+				D08FFBC51D08DB0300CF2BDB /* TableViewCell.m */,
+				D08FFBC71D08DB1200CF2BDB /* TableViewCell.h */,
 				D0CF54D61D08C95100E49945 /* Assets.xcassets */,
 				D0CF54DB1D08C95100E49945 /* Info.plist */,
 				D0CF54CA1D08C95100E49945 /* Supporting Files */,
@@ -218,8 +228,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0CF54D21D08C95100E49945 /* TableViewController.m in Sources */,
+				D08FFBC61D08DB0300CF2BDB /* TableViewCell.m in Sources */,
 				D0CF54CF1D08C95100E49945 /* AppDelegate.m in Sources */,
 				D0CF54CC1D08C95100E49945 /* main.m in Sources */,
+				D08FFBCA1D09201800CF2BDB /* Streak.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
