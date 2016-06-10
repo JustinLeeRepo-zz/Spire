@@ -165,7 +165,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-	return 15;
+	return 40;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -226,9 +226,12 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 15)];
-	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width, 15)];
-	[label setFont:[UIFont boldSystemFontOfSize:12]];
+	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40)];
+	UIView *line = [[UIView alloc] initWithFrame:CGRectMake(10, 35, view.frame.size.width, 1)];
+	line.backgroundColor = [UIColor blackColor];
+	
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width, view.frame.size.height)];
+	[label setFont:[UIFont boldSystemFontOfSize:14]];
 	NSString *string = [self.dictionaryKeyArray objectAtIndex:section];
 	NSDate *date = [NSDate dateWithTimeIntervalSince1970:[string doubleValue]];
 	
@@ -239,6 +242,7 @@
 	
 	[label setText:timeString];
 	[view addSubview:label];
+	[view addSubview:line];
 	[view setBackgroundColor:[UIColor whiteColor]];
 	
 	return view;
