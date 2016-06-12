@@ -204,7 +204,7 @@
 	
 	Streak *streak = [streaksPerSection  objectAtIndex:row];
 	int duration = ([streak.stopAt intValue]- [streak.startAt intValue]) / 60;
-	NSDate *date = [NSDate dateWithTimeIntervalSince1970:[streak.stopAt doubleValue]];
+	NSDate *date = [NSDate dateWithTimeIntervalSince1970:[streak.startAt doubleValue]];
 	
 	NSDateFormatter* timeUTC = [[NSDateFormatter alloc] init];
 	[timeUTC setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
