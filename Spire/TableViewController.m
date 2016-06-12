@@ -28,7 +28,7 @@
 	[self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
 	self.streakSectionDictionary = [[NSMutableDictionary alloc] init];
 	self.dictionaryKeyArray = [[NSMutableArray alloc] init];
-	self.tableView.pagingEnabled = YES;
+	self.tableView.pagingEnabled = NO;
 	self.currentPage = 0;
 	NSTimeInterval currentDay = [[NSDate date] timeIntervalSince1970];
 	NSInteger currentDayInt = currentDay;
@@ -107,38 +107,43 @@
 	dispatch_group_t group = dispatch_group_create();
 	
 	[manager GET:[self.endpointArray objectAtIndex:0] parameters:nil progress:nil success:^(NSURLSessionTask *task, NSArray *responseObject){
-		NSLog(@"HTTP GET REQUEST streak SUCCEEDED %@", responseObject);
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
-			[self parseStreak:responseObject];
-		});
-		for (int i = 1; i < 3; i++) {
-			//Enter group for each request
-			dispatch_group_enter(group);
-			
-			[manager GET:[self.endpointArray objectAtIndex:i] parameters:nil progress:nil success:^(NSURLSessionTask *task, NSArray *responseObject){
-				NSLog(@"HTTP GET REQUEST img / map SUCCEEDED %@", responseObject);
-				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
-					[self parseStreak:responseObject];
-				});
-				
-				dispatch_group_leave(group);
-			} failure:^(NSURLSessionTask *operation, NSError *error){
-				NSLog(@"HTTP GET REQUEST img / data FAILED %@", error);
-				
-				dispatch_group_leave(group);
-				return;
-			}];
+		if(responseObject.count == 0){
+			NSLog(@"NO STREAK TODAY! %@", responseObject);
 		}
-		
-		//wait for all the requests to finish
-		dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+		else {
+			NSLog(@"HTTP GET REQUEST streak SUCCEEDED %@", responseObject);
+			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
+				[self parseStreak:responseObject];
+			});
+			for (int i = 1; i < 3; i++) {
+				//Enter group for each request
+				dispatch_group_enter(group);
+				
+				[manager GET:[self.endpointArray objectAtIndex:i] parameters:nil progress:nil success:^(NSURLSessionTask *task, NSArray *responseObject){
+					NSLog(@"HTTP GET REQUEST img / map SUCCEEDED %@", responseObject);
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void){
+						[self parseStreak:responseObject];
+					});
+					
+					dispatch_group_leave(group);
+				} failure:^(NSURLSessionTask *operation, NSError *error){
+					NSLog(@"HTTP GET REQUEST img / data FAILED %@", error);
+					
+					dispatch_group_leave(group);
+					return;
+				}];
+			}
 			
-			self.dictionaryKeyArray = [self.streakSectionDictionary allKeys];
-			NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:nil ascending:NO];
-			self.dictionaryKeyArray = [self.dictionaryKeyArray sortedArrayUsingDescriptors:@[sd]];
-			[self.tableView reloadData];
-			self.isLoading = NO;
-		});
+			//wait for all the requests to finish
+			dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+				
+				self.dictionaryKeyArray = [self.streakSectionDictionary allKeys];
+				NSSortDescriptor *sd = [[NSSortDescriptor alloc] initWithKey:nil ascending:NO];
+				self.dictionaryKeyArray = [self.dictionaryKeyArray sortedArrayUsingDescriptors:@[sd]];
+				[self.tableView reloadData];
+				self.isLoading = NO;
+			});
+		}
 	} failure:^(NSURLSessionTask *operation, NSError *error){
 		NSLog(@"HTTP GET REQUEST streak FAILED %@", error);
 		
