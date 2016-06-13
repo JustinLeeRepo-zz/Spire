@@ -50,39 +50,47 @@
 }
 
 - (void)parseStreak:(NSArray *)response {
-	for (NSDictionary *dict in response) {
-		Streak *streak = [[Streak alloc] init];
-		NSMutableArray *currentDayStreak = [self.streakSectionDictionary objectForKey:[NSString stringWithFormat:@"%@", self.secsUTC]];
-		
-		if([dict objectForKey:@"start_at"] != nil){
-			NSNumber *startAt = [NSNumber numberWithInt:[[dict objectForKey:@"start_at"] intValue]];
-			NSNumber *stopAt = [NSNumber numberWithInt:[[dict objectForKey:@"stop_at"] intValue]];
-			NSString *type = [dict objectForKey:@"type"];
+	NSString *secsUTCString = [NSString stringWithFormat:@"%@", self.secsUTC];
+	NSMutableArray *currentDayStreak = [self.streakSectionDictionary objectForKey:secsUTCString] != nil ? [self.streakSectionDictionary objectForKey:secsUTCString] : [[NSMutableArray alloc] init];
+
+
+	if(response.count == 0){
+		//empty array for day/section with no streaks
+		[self.streakSectionDictionary setObject:currentDayStreak forKey:secsUTCString];
+	}
+	else {
+		for (NSDictionary *dict in response) {
+			Streak *streak = [[Streak alloc] init];
 			
-			[streak initLabel:startAt withStopAt:stopAt withType:type];
-			NSString *secsUTCString = [NSString stringWithFormat:@"%@", self.secsUTC];
-			NSMutableArray *sectionArray = [self.streakSectionDictionary objectForKey:secsUTCString] != nil ? [self.streakSectionDictionary objectForKey:secsUTCString] : [[NSMutableArray alloc] init];
-			[sectionArray addObject:streak];
-			
-			[self.streakSectionDictionary setObject:sectionArray forKey:secsUTCString];
-		}
-		else if([dict objectForKey:@"arrived_at"] != nil){
-			NSNumber *arrivedAt = [NSNumber numberWithInt:[[dict objectForKey:@"arrived_at"] intValue]];
-			double latitude = [[dict objectForKey:@"latitude"] doubleValue];
-			double longitude = [[dict objectForKey:@"longitude"] doubleValue];
-			
-			Streak *s = [self inRangeOfTime:arrivedAt withStreakArray:currentDayStreak];
-			if(s != nil){
-				[s initCoordinates:latitude withLongitude:longitude withArrivedAt:arrivedAt];
+			if([dict objectForKey:@"start_at"] != nil){
+				NSNumber *startAt = [NSNumber numberWithInt:[[dict objectForKey:@"start_at"] intValue]];
+				NSNumber *stopAt = [NSNumber numberWithInt:[[dict objectForKey:@"stop_at"] intValue]];
+				NSString *type = [dict objectForKey:@"type"];
+				
+				[streak initLabel:startAt withStopAt:stopAt withType:type];
+
+				[currentDayStreak addObject:streak];
+				
+				[self.streakSectionDictionary setObject:currentDayStreak forKey:secsUTCString];
 			}
-		}
-		else if([dict objectForKey:@"taken_at"] != nil){
-			NSNumber *takenAt = [NSNumber numberWithInt:[[dict objectForKey:@"taken_at"] intValue]];
-			NSURL *url = [NSURL URLWithString:[dict objectForKey:@"url"]];
-			
-			Streak *s = [self inRangeOfTime:takenAt withStreakArray:currentDayStreak];
-			if(s != nil) {
-				[s initImg:url withTakenAt:takenAt];
+			else if([dict objectForKey:@"arrived_at"] != nil){
+				NSNumber *arrivedAt = [NSNumber numberWithInt:[[dict objectForKey:@"arrived_at"] intValue]];
+				double latitude = [[dict objectForKey:@"latitude"] doubleValue];
+				double longitude = [[dict objectForKey:@"longitude"] doubleValue];
+				
+				Streak *s = [self inRangeOfTime:arrivedAt withStreakArray:currentDayStreak];
+				if(s != nil){
+					[s initCoordinates:latitude withLongitude:longitude withArrivedAt:arrivedAt];
+				}
+			}
+			else if([dict objectForKey:@"taken_at"] != nil){
+				NSNumber *takenAt = [NSNumber numberWithInt:[[dict objectForKey:@"taken_at"] intValue]];
+				NSURL *url = [NSURL URLWithString:[dict objectForKey:@"url"]];
+				
+				Streak *s = [self inRangeOfTime:takenAt withStreakArray:currentDayStreak];
+				if(s != nil) {
+					[s initImg:url withTakenAt:takenAt];
+				}
 			}
 		}
 	}
@@ -231,23 +239,32 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40)];
-	UIView *line = [[UIView alloc] initWithFrame:CGRectMake(10, 35, view.frame.size.width, 1)];
-	line.backgroundColor = [UIColor blackColor];
+	NSString *key = [self.dictionaryKeyArray objectAtIndex:section];
+	NSUInteger numberOfStreaksForSection = ((NSArray *)[self.streakSectionDictionary objectForKey:key]).count;
 	
+	UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40)];
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width, view.frame.size.height)];
 	[label setFont:[UIFont boldSystemFontOfSize:14]];
-	NSString *string = [self.dictionaryKeyArray objectAtIndex:section];
-	NSDate *date = [NSDate dateWithTimeIntervalSince1970:[string doubleValue]];
-	
+	NSString *utcString = [self.dictionaryKeyArray objectAtIndex:section];
+	NSDate *date = [NSDate dateWithTimeIntervalSince1970:[utcString doubleValue]];
 	NSDateFormatter* timeUTC = [[NSDateFormatter alloc] init];
 	[timeUTC setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
 	[timeUTC setDateFormat:@"MMMM d, YYYY"];
 	NSString* timeString= [timeUTC stringFromDate:date];
 	
-	[label setText:timeString];
+	if (numberOfStreaksForSection == 0) {
+		[label setText:[NSString stringWithFormat:@"No Streak for %@", timeString]];
+		view.layer.borderColor = [UIColor grayColor].CGColor;
+		view.layer.borderWidth = 1.0f;
+	} else {
+		
+		UIView *line = [[UIView alloc] initWithFrame:CGRectMake(10, 35, view.frame.size.width, 1)];
+		line.backgroundColor = [UIColor blackColor];
+		[view addSubview:line];
+		[label setText:timeString];
+	}
+
 	[view addSubview:label];
-	[view addSubview:line];
 	[view setBackgroundColor:[UIColor whiteColor]];
 	
 	return view;
