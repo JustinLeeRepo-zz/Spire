@@ -9,6 +9,7 @@
 #import "TableViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import <QuartzCore/QuartzCore.h>
 #import "Streak.h"
 #import "TableViewCell.h"
 
